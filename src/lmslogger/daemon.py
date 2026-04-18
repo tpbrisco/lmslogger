@@ -1,5 +1,6 @@
 import signal
 import sys
+import time
 from .config import DaemonConfig
 from .network import NetworkHandler
 
@@ -29,6 +30,12 @@ class Daemon:
             data = self.handler.receive_data()
             if data is None:
                 break
+
+            if data == "":
+                if self.config.alive_messages:
+                    print("No data received; still alive.")
+                time.sleep(self.config.poll_interval_seconds)
+                continue
 
         self.handler.close()
 

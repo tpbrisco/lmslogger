@@ -7,6 +7,8 @@ def test_config():
     assert config.host == "localhost"
     assert config.port == 9090
     assert config.command == "listen 1"
+    assert config.poll_interval_seconds == 60
+    assert config.alive_messages is True
 
 def test_network_handler():
     config = DaemonConfig()

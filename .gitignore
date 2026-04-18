@@ -25,3 +25,6 @@ build/
 
 # System files
 .DS_Store
+
+# Coverage
+.coverage

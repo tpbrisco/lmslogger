@@ -12,6 +12,7 @@ class NetworkHandler:
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((self.config.host, self.config.port))
+            self.sock.settimeout(10.0)
             return True
         except Exception as e:
             print(f"Connection failed: {e}")
@@ -33,6 +34,8 @@ class NetworkHandler:
                 return decoded
             else:
                 return None
+        except socket.timeout:
+            return ""
         except Exception as e:
             print(f"Receive error: {e}")
             return None
