@@ -1,0 +1,22 @@
+# Virtual environment
+/dev/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# mypy cache
+.mypy_cache/
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+
+# System files
+.DS_Store

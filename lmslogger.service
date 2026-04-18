@@ -1,0 +1,14 @@
+[Unit]
+Description=LMS Logger Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=brisco
+WorkingDirectory=/home/brisco/repo/gitbox/lmslogger
+ExecStart=/home/brisco/repo/gitbox/lmslogger/dev/bin/python src/daemon.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
