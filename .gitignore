@@ -18,5 +18,10 @@ __pycache__/
 # Logs
 *.log
 
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
 # System files
 .DS_Store
