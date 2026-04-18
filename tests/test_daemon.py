@@ -1,6 +1,6 @@
 import pytest
-from src.config import DaemonConfig
-from src.network import NetworkHandler
+from lmslogger.config import DaemonConfig
+from lmslogger.network import NetworkHandler
 
 def test_config():
     config = DaemonConfig()

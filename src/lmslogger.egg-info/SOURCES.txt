@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/lmslogger/__init__.py
+src/lmslogger/config.py
+src/lmslogger/daemon.py
+src/lmslogger/network.py
+src/lmslogger.egg-info/PKG-INFO
+src/lmslogger.egg-info/SOURCES.txt
+src/lmslogger.egg-info/dependency_links.txt
+src/lmslogger.egg-info/requires.txt
+src/lmslogger.egg-info/top_level.txt
+tests/test_daemon.py

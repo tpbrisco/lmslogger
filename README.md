@@ -2,6 +2,16 @@
 
 A Python system daemon that connects to a remote host on port 9090, sends a "listen 1" command, and receives/decodes status information.
 
+## Configuration
+
+The daemon can be configured via environment variables:
+
+- `LMS_HOST`: Remote host (default: localhost)
+- `LMS_PORT`: Port number (default: 9090)
+- `LMS_COMMAND`: Command to send (default: "listen 1")
+
+You can set these in a `.env` file or export them in your environment.
+
 ## Setup
 
 1. Create virtual environment: `python3 -m venv dev`
