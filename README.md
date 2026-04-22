@@ -27,3 +27,6 @@ You can set these in a `.env` file or export them in your environment.
 ## SDLC
 
 See docs/SDLC.md for the software development life cycle.
+
+## ADDITIONAL REFERENCES
+See [LMS Command Line Interface](https://lyrion.org/reference/cli/introduction/)
