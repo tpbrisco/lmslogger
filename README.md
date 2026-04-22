@@ -2,6 +2,8 @@
 
 A Python system daemon that connects to a remote host on port 9090, sends a "listen 1" command, and receives/decodes status information.
 
+Configure what you would like to see through LMS -> Settings -> Advanced -> Logging.  What is enabled there winds up on the output of the lmslogger.
+
 ## Configuration
 
 The daemon can be configured via environment variables:
