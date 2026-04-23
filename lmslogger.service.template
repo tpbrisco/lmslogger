@@ -1,0 +1,16 @@
+[Unit]
+Description=LMS Logger Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=YOURUSERNAME
+Environment=LMS_HOST=YOUR_LMS_HOST
+WorkingDirectory=PYTHON_VIRTUALENV
+ExecStart=PYTHON_VIRTUALENV_PYTHON_COMMAND
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
