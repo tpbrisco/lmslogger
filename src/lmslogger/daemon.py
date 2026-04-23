@@ -5,7 +5,7 @@ from .config import DaemonConfig
 from .network import NetworkHandler
 
 def signal_handler(signum: int, frame) -> None:  # type: ignore
-    print("Received signal, shutting down...")
+    print("Received signal, shutting down...", flush=True)
     sys.exit(0)
 
 class Daemon:
@@ -33,7 +33,7 @@ class Daemon:
 
             if data == "":
                 if self.config.alive_messages:
-                    print("No data received; still alive.")
+                    print("No data received; still alive.", flush=True)
                 time.sleep(self.config.poll_interval_seconds)
                 continue
 
