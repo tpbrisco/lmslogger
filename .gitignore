@@ -1,6 +1,9 @@
 # Virtual environment
 /dev/
 
+# configuration files
+lmslogger.service
+
 # Python caches
 __pycache__/
 *.py[cod]

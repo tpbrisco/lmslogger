@@ -14,6 +14,18 @@ The daemon can be configured via environment variables:
 
 You can set these in a `.env` file or export them in your environment.
 
+While the instruction below indicate installing it as a system
+service, no privileges are necessary, and this can run and operate as
+a user systemd service.
+
+The lmslogger.service has a few items to be filled in:
+- YOURUSERNAME - the username under which the service should run
+- YOUR\_LMS\_HOST - the LMS server
+- PYTHON\_VIRTUALENV - full path to the virtualenv python -
+  e.g. /home/me/lmslogger/.venv/
+- PYTHON\_VIRTUALENV\_PYTHON_COMMAND - the virtualenv path to python -
+  e.g. /home/me/lmslogger/.venv/bin/python -m lmslogger.daemon
+
 ## Setup
 
 1. Create virtual environment: `python3 -m venv dev`
@@ -21,10 +33,11 @@ You can set these in a `.env` file or export them in your environment.
 3. Install dependencies: `pip install -r requirements.txt`
 4. Run type check: `mypy src/`
 5. Run tests: `pytest`
-6. Install service: `sudo cp lmslogger.service /etc/systemd/system/`
-7. Enable: `sudo systemctl enable lmslogger`
-8. Start: `sudo systemctl start lmslogger`
-9. Check logs: `journalctl -u lmslogger -f`
+6. Configuration service: `cp lmslogger.service.temple lmslogger.service`
+7. Install service: `cp lmslogger.service ~/.config/systemd/user/`
+8. Enable: `systemctl --user enable lmslogger`
+9. Start: `systemctl --user start lmslogger`
+10. Check logs: `journalctl --user -u lmslogger -f`
 
 ## SDLC
 
