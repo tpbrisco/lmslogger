@@ -30,7 +30,7 @@ class NetworkHandler:
             data = self.sock.recv(1024)
             if data:
                 decoded = urllib.parse.unquote(data.decode())
-                print(f"Received: {decoded}")
+                print(f"Received: {decoded}", flush=True)
                 return decoded
             else:
                 return None
