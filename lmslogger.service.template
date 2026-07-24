@@ -6,9 +6,8 @@ After=network.target
 Type=simple
 User=nobody
 Group=nobody
-EnvironmentFile=$RUNDIR/lmslogger.env
 WorkingDirectory=$RUNDIR/src
-ExecStart=$EXECCMD -m lmslogger.daemon
+ExecStart=$EXECCMD -m lmslogger.daemon --env-file $RUNDIR/lmslogger.env
 
 Restart=always
 RestartSec=5
