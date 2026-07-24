@@ -11,8 +11,20 @@ The daemon can be configured via environment variables:
 - `LMS_HOST`: Remote host (default: localhost)
 - `LMS_PORT`: Port number (default: 9090)
 - `LMS_COMMAND`: Command to send (default: "listen 1")
+- `LMS_POLL_INTERVAL`: Time in seconds to wait between alive polls (default: 60)
+- `LMS_ALIVE_MESSAGES`: Whether to print alive messages when no data is received (default: true)
 
 You can set these in a `.env` file or export them in your environment.
+
+Command-line flags can override both the `.env` file and environment variables:
+
+- `--env-file <path>`: Path to the `.env` file to load (default: `.env`)
+- `--host <host>`: LMS host to connect to
+- `--port <port>`: LMS port to connect to
+- `--command <command>`: Command to send to LMS after connecting
+- `--poll-interval <seconds>`: Seconds to wait between heartbeat polls
+- `--alive-messages`: Print alive messages when no data is received
+- `--no-alive-messages`: Disable alive messages
 
 While the instruction below indicate installing it as a system
 service, no privileges are necessary, and this can run and operate as

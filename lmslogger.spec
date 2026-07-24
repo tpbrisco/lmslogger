@@ -56,6 +56,6 @@ A specialized Python logging daemon designed to integration with Lyrion Music Se
 %systemd_postun_with_restart lmslogger.service
 
 %changelog
-* Tue Jul 24 2026 Your Name <you@example.com> - 0.1.0-1
+* Tue Jul 24 2026 Your Name <you@example.com> - 0.1.5-1
 - Initial RPM packaging and spec cleanup
 
