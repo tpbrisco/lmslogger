@@ -30,10 +30,9 @@ fi
 #
 export RUNDIR="${LMSDIR}"
 export EXECCMD="${PYTHON_COMMAND}"
-export YOURUSERNAME="${YOURUSERNAME:-"root"}"
 
 # shellcheck disable=SC2016
-envsubst '$RUNDIR $EXECCMD $YOURUSERNAME' < lmslogger.service.template > lmslogger.service
+envsubst '$RUNDIR $EXECCMD' < lmslogger.service.template > lmslogger.service
 
 # shellcheck disable=SC2164
 cd /etc/systemd/system

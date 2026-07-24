@@ -4,7 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=$YOURUSERNAME
+User=nobody
+Group=nobody
 EnvironmentFile=$RUNDIR/lmslogger.env
 WorkingDirectory=$RUNDIR/src
 ExecStart=$EXECCMD -m lmslogger.daemon
