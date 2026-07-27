@@ -27,11 +27,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         
-      - name: run rpmbuild on artifact
-        id: rpm
-        uses: naveenrajm7/rpmbuild@master
+      - name: build rpm
+        uses: xmidt-org/rpm-package-action@v1
         with:
-          spec_file: ${{ vars.PKG_NAME }}.spec
+          path: .
+          spec: ${{ vars.PKG_NAME }}.spec
+          distro: rocky-8
+
+      # - name: run rpmbuild on artifact
+      #   id: rpm
+      #   uses: naveenrajm7/rpmbuild@master
+      #   with:
+      #     spec_file: ${{ vars.PKG_NAME }}.spec
 
       - name: Upload rpm as artifact
         uses: actions/upload-artifact@v7
