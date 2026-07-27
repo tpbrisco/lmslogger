@@ -1,0 +1,20 @@
+build_rpm:
+  name: build rpm
+  needs: build_artifact
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v7
+
+    - name: run rpmbuild on artifact
+      id: rpm
+      uses: naveenrajm7/rpmbuild@master
+      with:
+        spec_file: ${{ var.PKG_NAME }}.spec
+
+    - name: Upload rpm as artifact
+      uses: action/upload-artifact@v7
+      with:
+        name: ${{ var.PKG_NAME }}-${{ github.ref_name}}-1.${{ var.DIST }}.${{ var.ARCH }}.rpm
+        path: rpmbuild/RPMS/${{ var.ARCH }}/*.rpm
