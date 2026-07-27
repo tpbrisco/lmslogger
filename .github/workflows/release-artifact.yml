@@ -21,7 +21,7 @@ jobs:
   create_rpm:
     name: create rpm from tar artifact
     runs-on: ubuntu-latest
-    needs: build_artifact
+    needs: create_tar
 
     steps:
       - name: Checkout repository
