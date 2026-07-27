@@ -13,6 +13,8 @@ BuildArch: noarch
 
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
+BuildRequires: python3-wheel
+BuildRequires: python3-build
 BuildRequires: python3-pydantic
 BuildRequires: systemd-rpm-macros
 
@@ -27,8 +29,11 @@ A specialized Python logging daemon designed to integration with Lyrion Music Se
 %prep
 %autosetup
 
+%build
+python3 -m build --wheel --no-isolation
+
 %install
-%py3_install
+python3 -m pip install --root %{buildroot} --no-deps dist/*.whl
 
 # install the systemd service file
 %{__install} -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/lmslogger.service
@@ -42,9 +47,11 @@ A specialized Python logging daemon designed to integration with Lyrion Music Se
 %{_bindir}/lmslogger
 %{_unitdir}/lmslogger.service
 
-# %config(noreplace) ensures package updates wont overwrite custom admin edits
 %dir %{_sysconfdir}/lmslogger
 %config(noreplace) %{_sysconfdir}/lmslogger/lmslogger.env
+
+%check
+true
 
 %post
 %systemd_post lmslogger.service
@@ -56,6 +63,6 @@ A specialized Python logging daemon designed to integration with Lyrion Music Se
 %systemd_postun_with_restart lmslogger.service
 
 %changelog
-* Tue Jul 24 2026 Your Name <you@example.com> - 0.1.5-1
+* Mon Jul 24 2026 Your Name <you@example.com> - 0.1.5-1
 - Initial RPM packaging and spec cleanup
 
