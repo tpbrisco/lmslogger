@@ -2,7 +2,6 @@
 /dev/
 
 # configuration files
-lmslogger.service
 
 # Python caches
 __pycache__/
