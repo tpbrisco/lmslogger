@@ -1,0 +1,15 @@
+[Unit]
+Description=LMS Logger Daemon
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/lmslogger/lmslogger.env
+ExecStart=/usr/bin/python3 -m lmslogger.daemon
+Restart=on-failure
+RestartSec=5
+User=nobody
+Group=nobody
+
+[Install]
+WantedBy=multi-user.target
