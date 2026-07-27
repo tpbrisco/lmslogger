@@ -7,14 +7,11 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - name: build RPM package
-      id: rpm
-      uses: naveenrajm7/rpmbuild@master
-      with:
-        spec_file: "lmslogger.spec"
-
-    - name: Upload artifact
+    - name: create source archive
+      run: git archive --verbose --format=tgz --output ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tar.gz HEAD .
+    - name: upload tar archive as artifact
       uses: actions/upload-artifact@v7
       with:
-        name: Binary RPM
-        path: ${{ steps.rpm.outputs.rpm_dir_path }}
+        name: ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tar.gz
+        path: ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tar.gz
+
