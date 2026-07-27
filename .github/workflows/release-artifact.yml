@@ -34,7 +34,7 @@ jobs:
           spec_file: ${{ vars.PKG_NAME }}.spec
 
       - name: Upload rpm as artifact
-        uses: action/upload-artifact@v7
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}-1.${{ vars.DIST }}.${{ vars.ARCH }}.rpm
           path: rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
