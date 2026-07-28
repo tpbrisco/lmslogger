@@ -4,7 +4,7 @@ on: push
 jobs:
   create_tar:
     name: create tar from repo
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
       - uses: actions/checkout@v7
@@ -20,7 +20,7 @@ jobs:
 
   create_rpm:
     name: create rpm from tar artifact
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: create_tar
 
     steps:
