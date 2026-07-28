@@ -35,4 +35,5 @@ jobs:
       - name: clean up
         run: |
           rm -rf ~/rpmbuild
-          rm -rf .
+          rm -rf ./* || true
+          rm -rf ./.??* || true
