@@ -27,27 +27,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         
-        - name: build rpm
-          run: >-
-            rpmdev-setuptree
-            export RUNDIR=${PWD}
-            cd ~/rpmbuild
-            cp ${RUNDIR}/_work/lmslogger-*.tgz SOURCES/
-            cp ${RUNDIR}/_work/lmslogger.spec SPECS/
-            rpmbuild -ba SPECS/lmslogger.spec
-
-        # - name: build rpm
-        # uses: xmidt-org/rpm-package-action@v1
-        # with:
-        #   path: .
-        #   spec: ${{ vars.PKG_NAME }}.spec
-        #   distro: rocky-8
-
-      # - name: run rpmbuild on artifact
-      #   id: rpm
-      #   uses: naveenrajm7/rpmbuild@master
-      #   with:
-      #     spec_file: ${{ vars.PKG_NAME }}.spec
+      - name: build rpm
+        run: |
+          rpmdev-setuptree
+          export RUNDIR=${PWD}
+          cd ~/rpmbuild
+          cp ${RUNDIR}/_work/lmslogger-*.tgz SOURCES/
+          cp ${RUNDIR}/_work/lmslogger.spec SPECS/
+          rpmbuild -ba SPECS/lmslogger.spec
 
       - name: Upload rpm as artifact
         uses: actions/upload-artifact@v7
