@@ -32,8 +32,8 @@ jobs:
           rpmdev-setuptree
           export RUNDIR=${PWD}
           cd ~/rpmbuild
-          cp ${RUNDIR}/_work/lmslogger-*.tgz SOURCES/
-          cp ${RUNDIR}/_work/lmslogger.spec SPECS/
+          cp ${{ vars.PKG_NAME }}/lmslogger-*.tgz SOURCES/
+          cp ${{ vars.PKG_NAME }}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
       - name: Upload rpm as artifact
