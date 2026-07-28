@@ -29,7 +29,7 @@ jobs:
         
         - name: build rpm
           run: |
-            rpmbuild
+            rpmdev-setuptree
             export RUNDIR=${PWD}
             cd ~/rpmbuild
             cp ${RUNDIR}/_work/lmslogger-*.tgz SOURCES/
