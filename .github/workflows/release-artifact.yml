@@ -2,7 +2,7 @@ name: create release artifact
 on: workflow_dispatch
 
 jobs:
-  create_tar:
+  create_rpm:
     name: create tar from repo
     runs-on: self-hosted
     
@@ -12,28 +12,13 @@ jobs:
       - name: create source archive
         run: git archive --verbose --format=tgz --output ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz HEAD .
 
-      - name: upload tar archive as artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz
-          path: ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz
-
-  create_rpm:
-    name: create rpm from tar artifact
-    runs-on: self-hosted
-    needs: create_tar
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-        
       - name: build rpm
         run: |
           rpmdev-setuptree
           export RUNDIR=${PWD}
           cd ~/rpmbuild
-          cp %{{ vars.PKG_NAME }}/lmslogger-%{{ github.ref_name }}.tgz SOURCES/
-          cp %{{ vars.PKG_NAME }}/lmslogger.spec SPECS/
+          cp lmslogger/lmslogger-main.tgz SOURCES/
+          cp lmslogger/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
       - name: Upload rpm as artifact
