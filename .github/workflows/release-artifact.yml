@@ -10,7 +10,11 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: create source archive
-        run: git archive --verbose --format=tgz --output ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz HEAD .
+        run: |
+          export VERSION=$(grep ^Version: ${RUNDIR}/lmslogger.spec | sed -e 's/Version: //')
+          git archive --verbose --format=tgz \
+          --prefix="lmslogger-${VERSION}/" \
+          --output ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz HEAD .
 
       - name: build rpm
         run: |
