@@ -11,6 +11,7 @@ jobs:
 
       - name: create source archive
         run: |
+          set -xv
           export VERSION=$(grep ^Version: ${RUNDIR}/lmslogger.spec | sed -e 's/Version: //')
           git archive --verbose --format=tgz \
           --prefix="lmslogger-${VERSION}/" \
