@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 jobs:
   create_rpm:
-    name: create tar from repo
+    name: create rpm from repo
     runs-on: self-hosted
     
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: Upload rpm as artifact
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}-1.${{ vars.DIST }}.${{ vars.ARCH }}.rpm
+          name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}.${{ vars.ARCH }}.rpm
           path: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
 
 
