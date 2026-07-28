@@ -14,11 +14,12 @@ jobs:
 
       - name: build rpm
         run: |
+          set -xv
           rpmdev-setuptree
           export RUNDIR=${PWD}
           export VERSION=$(grep ^Version: ${RUNDIR}/lmslogger.spec | sed -e 's/Version: //')
           cd ~/rpmbuild
-          cp ${RUNDIR}/lmslogger-main.tgz SOURCES/
+          cp ${RUNDIR}/lmslogger-main.tgz SOURCES/lmslogger-${VERSION}.tgz
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
