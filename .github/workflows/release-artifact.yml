@@ -35,6 +35,7 @@ jobs:
             cp ${RUNDIR}/_work/lmslogger-*.tgz SOURCES/
             cp ${RUNDIR}/_work/lmslogger.spec SPECS
             rpmbuild -ba SPECS/lmslogger.spec
+
         # - name: build rpm
         # uses: xmidt-org/rpm-package-action@v1
         # with:
