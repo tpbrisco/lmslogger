@@ -12,7 +12,7 @@ jobs:
       - name: create source archive
         run: |
           set -xv
-          export VERSION=$(grep ^Version: ${RUNDIR}/lmslogger.spec | sed -e 's/Version: //')
+          export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
           git archive --verbose --format=tgz \
           --prefix="lmslogger-${VERSION}/" \
           --output ${{ vars.PKG_NAME }}-${{ github.ref_name }}.tgz HEAD .
@@ -20,9 +20,9 @@ jobs:
       - name: build rpm
         run: |
           set -xv
-          rpmdev-setuptree
           export RUNDIR=${PWD}
-          export VERSION=$(grep ^Version: ${RUNDIR}/lmslogger.spec | sed -e 's/Version: //')
+          export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
+          rpmdev-setuptree
           cd ~/rpmbuild
           cp ${RUNDIR}/lmslogger-main.tgz SOURCES/lmslogger-${VERSION}.tgz
           cp ${RUNDIR}/lmslogger.spec SPECS/
