@@ -9,6 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: trivy vulnerability scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          vuln-type: 'library'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: put in security tab
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: 'trivy-results.sarif'
+
       - name: create source archive
         run: |
           export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
