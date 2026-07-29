@@ -1,3 +1,8 @@
+"""
+lmslogger key internals.  This connects to the LMS_HOST, issues the LMS_COMMAND,
+and listens for output (based on the Lyrion Media Server debug flags, and others).  If
+LMS_POLL_INTERVAL_SECONDS is reached, then a LMS_ALIVE_MESSAGES is issued.
+"""
 import argparse
 import signal
 import sys
@@ -6,6 +11,7 @@ from .config import DaemonConfig
 from .network import NetworkHandler
 
 def signal_handler(signum: int, frame) -> None:  # type: ignore
+    '''Handle shutdown signal from systemd gracefully'''
     print("Received signal, shutting down...", flush=True)
     sys.exit(0)
 
@@ -15,12 +21,14 @@ class Daemon:
         self.handler = NetworkHandler(self.config)
 
     def connect_and_send_command(self) -> bool:
+        '''Connect to LMS_HOST, and request messages'''
         if not self.handler.connect():
             return False
         self.handler.send_command(self.config.command)
         return True
 
     def run(self) -> None:
+        '''Wait and listen for messages from LMS_HOST'''
         signal.signal(signal.SIGTERM, signal_handler)
         signal.signal(signal.SIGINT, signal_handler)
 
@@ -42,6 +50,7 @@ class Daemon:
 
 
 def parse_args() -> argparse.Namespace:
+    '''Handle command-line arguments'''
     parser = argparse.ArgumentParser(
         prog="lmslogger",
         description="Run the LMS logger daemon with optional CLI configuration.",
@@ -73,6 +82,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def build_config(args: argparse.Namespace) -> DaemonConfig:
+    '''Build configuration object'''
     config_kwargs: dict[str, object] = {}
     if args.host is not None:
         config_kwargs["host"] = args.host
@@ -89,6 +99,7 @@ def build_config(args: argparse.Namespace) -> DaemonConfig:
 
 
 def main() -> None:
+    '''run daemon'''
     args = parse_args()
     daemon = Daemon(build_config(args))
     daemon.run()
