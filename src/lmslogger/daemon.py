@@ -16,6 +16,7 @@ def signal_handler(signum: int, frame) -> None:  # type: ignore
     sys.exit(0)
 
 class Daemon:
+    '''Main loop and connection management'''
     def __init__(self, config: DaemonConfig | None = None) -> None:
         self.config = config or DaemonConfig()
         self.handler = NetworkHandler(self.config)

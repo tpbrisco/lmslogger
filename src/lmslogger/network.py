@@ -1,3 +1,6 @@
+"""
+Network I/O primitives for LMS logger
+"""
 import socket
 import urllib.parse
 from typing import Optional

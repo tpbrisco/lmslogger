@@ -4,7 +4,8 @@ Configuration options for LMS logger - priority for fields is
 - environment variable
 - command line
 
-Set host, port, command to send to lms server, frequency of polling, and whether "keepalive" messages are issued
+Set host, port, command to send to lms server, frequency of polling, and
+whether "keepalive" messages are issued
 """
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
