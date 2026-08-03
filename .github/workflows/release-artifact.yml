@@ -24,7 +24,7 @@ jobs:
       - name: debug tag_version outputs
         run: |
           echo "tag=${{ steps.tag_version.outputs.tag }}"
-          echo "all outputs: ${{ toJson(steps.tag_version.output) }}"
+          echo "all outputs: ${{ toJson(steps.tag_version.outputs) }}"
 
       - name: trivy vulnerability scan
         uses: aquasecurity/trivy-action@v0.36.0
