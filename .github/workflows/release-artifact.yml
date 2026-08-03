@@ -46,6 +46,8 @@ jobs:
           rpmbuild -ba SPECS/lmslogger.spec
 
       - name: tag release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
           git config user.name 'brisco'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
