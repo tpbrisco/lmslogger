@@ -52,13 +52,6 @@ jobs:
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
-      - name: tag release
-        run: |
-          git tag -a "v${{ github.sha }}" -m "Release v${{ github.sha }}"
-          git push origin "v${{ github.sha }}"
-        with:
-          github_token: ${{ secrets.GHCR_TOKEN }}
-
       - name: upload release asset
         uses: softprops/action-gh-release@v3
         with:
