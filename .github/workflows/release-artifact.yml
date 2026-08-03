@@ -47,6 +47,7 @@ jobs:
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
+        if: github.ref_type == 'tag'
         with:
           files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
             
