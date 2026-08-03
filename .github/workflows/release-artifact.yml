@@ -7,7 +7,7 @@ jobs:
     runs-on: self-hosted
     
     permissions:
-      contents: read
+      contents: write
       security-events: write
       actions: read
 
@@ -54,8 +54,10 @@ jobs:
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         with:
-          tag_name: release
+          tag_name: ${{ steps.tag_version.outputs.tag }}
           files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
             
 
