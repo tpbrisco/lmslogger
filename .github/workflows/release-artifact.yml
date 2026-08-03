@@ -49,8 +49,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
-          git config user.name 'brisco'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git tag -a "v${{ github.sha }}" -m "Release v${{ github.sha }}"
           git push origin "v${{ github.sha }}"
 
