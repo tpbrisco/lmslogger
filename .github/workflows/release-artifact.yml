@@ -49,8 +49,8 @@ jobs:
         run: |
           git config user.name 'brisco'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git tag -a "v${{ inputs.version }}" -m "Release v${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          git tag -a "v${{ github.sha }}" -m "Release v${{ github.sha }}"
+          git push origin "v${{ github.sha }}"
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
