@@ -13,6 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-tags: true
+
+      - name: determine tag name
+        id: tag_name
+        run: |
+          git fetch --tags --force
+          TAG="$(git describe --tags --abbrev=0)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Using tag: $TAG"
 
       - name: bump version and tag
         id: tag_version
