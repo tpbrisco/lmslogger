@@ -45,19 +45,19 @@ jobs:
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
-      # - name: Upload rpm as artifact
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}.${{ vars.ARCH }}.rpm
-      #     path: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
-
       - name: upload release asset
-        id: upload-release-asset
-        uses: action/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN ${{ secrets.GHCR_TOKEN }}
+        uses: softprops/action-gh-release@v3
         with:
-          asset_paths: '[ "~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm" ]'
+          files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
+            
+
+      # - name: upload release asset
+      #   id: upload-release-asset
+      #   uses: action/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN ${{ secrets.GHCR_TOKEN }}
+      #   with:
+      #     asset_paths: '[ "~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm" ]'
 
       - name: clean up
         run: |
