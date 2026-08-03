@@ -45,11 +45,17 @@ jobs:
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
-      - name: Upload rpm as artifact
-        uses: actions/upload-artifact@v7
+      - name: Push rpm to ghcr
+        uses: macbre/push-to-ghcr@master
         with:
-          name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}.${{ vars.ARCH }}.rpm
-          path: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
+          image_name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}.${{ vars.ARCH }}.rpm
+          github_token: ${{ secrets.GHCR_TOKEN }}
+
+      # - name: Upload rpm as artifact
+      #   uses: actions/upload-artifact@v7
+      #   with:
+      #     name: ${{ vars.PKG_NAME }}-${{ github.ref_name}}.${{ vars.ARCH }}.rpm
+      #     path: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
 
       - name: clean up
         run: |
