@@ -45,6 +45,13 @@ jobs:
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
 
+      - name: tag release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git tag -a "v${{ inputs.version }}" -m "Release v${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
+
       - name: upload release asset
         uses: softprops/action-gh-release@v3
         with:
