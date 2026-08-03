@@ -14,6 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: bump version and tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.1
+        with:
+          github_token: ${{ secrets.GHCR_TOKEN }}
+          create_annotated_tag: true
+
       - name: trivy vulnerability scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
@@ -46,11 +53,11 @@ jobs:
           rpmbuild -ba SPECS/lmslogger.spec
 
       - name: tag release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
           git tag -a "v${{ github.sha }}" -m "Release v${{ github.sha }}"
           git push origin "v${{ github.sha }}"
+        with:
+          github_token: ${{ secrets.GHCR_TOKEN }}
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
