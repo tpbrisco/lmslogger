@@ -28,7 +28,6 @@ jobs:
           printf 'github.ref_name=%s\n' '${{ github.ref_name }}'
           printf 'release_type=%s\n' '${{ steps.tag_version.outputs.release_type }}'
           printf 'version=%s\n' '${{ steps.tag_version.outputs.new_version }}'
-          printf 'ref=%s\n' '${{ steps.tag_version.outputs.ref }}'
 
       - name: trivy vulnerability scan
         uses: aquasecurity/trivy-action@v0.36.0
@@ -66,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         with:
-          tag_name: ${{ steps.tag_version.outputs.tag }}
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
           files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
             
 
