@@ -67,15 +67,6 @@ jobs:
         with:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
           files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
-            
-
-      # - name: upload release asset
-      #   id: upload-release-asset
-      #   uses: action/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN ${{ secrets.GHCR_TOKEN }}
-      #   with:
-      #     asset_paths: '[ "~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm" ]'
 
       - name: clean up
         run: |
