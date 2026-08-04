@@ -26,9 +26,8 @@ jobs:
       - name: debug tag_version outputs
         run: |
           printf 'github.ref_name=%s\n' '${{ github.ref_name }}'
-          printf 'tag=%s\n' '${{ steps.tag_version.outputs.tag }}'
-          printf 'version=%s\n' '${{ steps.tag_version.outputs.version }}'
-          printf 'github_tag=%s\n' '${{ steps.tag_version.outputs.github_tag }}'
+          printf 'release_type=%s\n' '${{ steps.tag_version.outputs.release_type }}'
+          printf 'version=%s\n' '${{ steps.tag_version.outputs.new_version }}'
           printf 'ref=%s\n' '${{ steps.tag_version.outputs.ref }}'
 
       - name: trivy vulnerability scan
