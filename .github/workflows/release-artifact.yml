@@ -47,10 +47,6 @@ jobs:
     name: create rpm from repo
     runs-on: self-hosted
     
-    permissions:
-      contents: write
-      security-events: write
-      actions: read
 
       - name: create source archive
         run: |
