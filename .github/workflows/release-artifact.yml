@@ -64,7 +64,7 @@ jobs:
         run: |
           export RUNDIR=${PWD}
           export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
-          echo "New tags are \"${TAG_VERSION}\""
+          echo "New tag is \"${TAG_VERSION}\""
           rpmdev-setuptree
           cd ~/rpmbuild
           ls ${RUNDIR}
