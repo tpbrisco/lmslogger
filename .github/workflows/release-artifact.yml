@@ -1,15 +1,15 @@
 name: create release artifact
 on: workflow_dispatch
 
+permissions:
+  contents: write
+  security-events: write
+  actions: read
+
 jobs:
   create_version:
     name: create tags, scans for repo
     runs-on: self-hosted
-
-    permissions:
-      contents: write
-      security-events: write
-      actions: read
 
     steps:
       - uses: actions/checkout@v7
@@ -47,7 +47,7 @@ jobs:
     name: create rpm from repo
     runs-on: self-hosted
     
-
+    steps:
       - name: create source archive
         run: |
           export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
