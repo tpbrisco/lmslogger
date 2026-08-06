@@ -42,6 +42,7 @@ jobs:
           printf 'github.ref_name=%s\n' '${{ github.ref_name }}'
           printf 'release_type=%s\n' '${{ steps.tag_version.outputs.release_type }}'
           printf 'version=%s\n' '${{ steps.tag_version.outputs.new_version }}'
+          printf 'tag=%s\n' '${{ steps.tag_version.outputs.new_tag }}'
 
   create_rpm:
     name: create rpm from repo
