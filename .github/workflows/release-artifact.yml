@@ -61,12 +61,15 @@ jobs:
         run: |
           export RUNDIR=${PWD}
           export VERSION=$(grep ^Version: lmslogger.spec | sed -e 's/Version: //')
+          echo "New tags are \"${TAG_VERSION}\""
           rpmdev-setuptree
           cd ~/rpmbuild
           ls ${RUNDIR}
           cp ${RUNDIR}/lmslogger-${{ github.ref_name }}.tgz SOURCES/lmslogger-${VERSION}.tgz
           cp ${RUNDIR}/lmslogger.spec SPECS/
           rpmbuild -ba SPECS/lmslogger.spec
+        env:
+          TAG_VERSION: ${{ needs.create_version.outputs.new_tag }}
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
