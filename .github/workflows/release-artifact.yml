@@ -46,6 +46,7 @@ jobs:
   create_rpm:
     name: create rpm from repo
     runs-on: self-hosted
+    needs: create_version
     
     steps:
       - name: create source archive
@@ -67,7 +68,6 @@ jobs:
 
       - name: upload release asset
         uses: softprops/action-gh-release@v3
-        needs: create_version
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
         with:
