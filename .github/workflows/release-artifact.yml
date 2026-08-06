@@ -75,6 +75,7 @@ jobs:
           TAG_VERSION: ${{ needs.create_version.outputs.new_tag }}
 
       - name: upload release asset
+        id: upload_release
         uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
@@ -83,6 +84,7 @@ jobs:
           files: ~/rpmbuild/RPMS/${{ vars.ARCH }}/*.rpm
 
       - name: clean up
+        if: steps.upload_release.outcome == 'success'
         run: |
           rm -rf ~/rpmbuild
           rm -rf ./* || true
