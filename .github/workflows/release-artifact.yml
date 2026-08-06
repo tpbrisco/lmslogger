@@ -10,6 +10,8 @@ jobs:
   create_version:
     name: create tags, scans for repo
     runs-on: self-hosted
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
 
     steps:
       - uses: actions/checkout@v7
