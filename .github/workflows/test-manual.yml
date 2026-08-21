@@ -31,7 +31,7 @@ jobs:
         run: PYTHONPATH=src pytest --cov=src --cov-report=json:coverage.json -q
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-json
           path: coverage.json
