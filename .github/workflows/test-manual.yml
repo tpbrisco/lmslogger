@@ -25,10 +25,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          python -m pip install pytest mypy
+          python -m pip install pytest mypy pytest-cov
 
-      - name: Run tests
-        run: PYTHONPATH=src pytest -q
+      - name: Run tests with coverage
+        run: PYTHONPATH=src pytest --cov=src --cov-report=json:coverage.json -q
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-json
+          path: coverage.json
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Run type checks
         run: PYTHONPATH=src mypy src
