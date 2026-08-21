@@ -24,7 +24,9 @@ jobs:
           echo -n "mypy"; which mypy; echo -n "pytest"; which pytest; echo -n "pytest-cov"; which pytest-cov
 
       - name: Run tests with coverage
-        run: PYTHONPATH=src python3 -m pytest --cov=src --cov-report=json:coverage.json -q
+        run: |
+          export PATH="${PATH}:$HOME/.local/bin"  
+          PYTHONPATH=src python3 -m pytest --cov=src --cov-report=json:coverage.json -q
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
