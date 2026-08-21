@@ -20,8 +20,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
           python3 -m pip install pytest mypy pytest-cov
-          export PATH="${PATH}:$HOME/.local/bin"
-          echo -n "mypy "; which mypy; echo -n "pytest "; which pytest;
 
       - name: Run tests with coverage
         run: |
