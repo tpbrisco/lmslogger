@@ -31,3 +31,11 @@
 - Use appropriate data structures and caching where beneficial.
 - Implement asynchronous operations for I/O bound tasks.
 - Regularly benchmark and tune performance.
+
+## Delivery Performance and DORA
+- Keep changes small, reviewable, and focused to improve lead time and reduce delivery risk.
+- Prefer frequent, low-risk releases over infrequent large rollouts to improve deployment frequency.
+- Require validation before merge and before release so change failure rates remain low.
+- Design for fast recovery by documenting rollback and mitigation steps, and by maintaining straightforward operational procedures.
+- Review DORA metrics during retrospectives and use them to improve engineering flow without sacrificing quality or safety.
+- Maintain a local-first development loop for speed, while using controlled remote validation where needed for release confidence.

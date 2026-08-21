@@ -1,5 +1,6 @@
 # Virtual environment
 /dev/
+.venv/
 
 # configuration files
 
