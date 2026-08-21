@@ -23,7 +23,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          export PATH="${PATH}:$HOME/.local/bin"  
+          # export PATH="${PATH}:$HOME/.local/bin"  
           PYTHONPATH=src python3 -m pytest --cov=src --cov-report=json:coverage.json -q
 
       - name: Upload coverage report
@@ -36,5 +36,5 @@ jobs:
 
       - name: Run type checks
         run: |
-          export PATH="${PATH}:$HOME/.local/bin"
-          PYTHONPATH=src mypy src
+          # export PATH="${PATH}:$HOME/.local/bin"
+          PYTHONPATH=src python3 -m mypy src
