@@ -20,6 +20,7 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
           python3 -m pip install pytest mypy pytest-cov
+          echo -n "mypy"; which mypy; echo -n "pytest"; which pytest; echo -n "pytest-cov"; which pytest-cov
 
       - name: Run tests with coverage
         run: PYTHONPATH=src python3 -m pytest --cov=src --cov-report=json:coverage.json -q
