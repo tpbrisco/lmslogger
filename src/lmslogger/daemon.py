@@ -7,6 +7,8 @@ import argparse
 import signal
 import sys
 import time
+from typing import Any, cast
+
 from .config import DaemonConfig
 from .network import NetworkHandler
 
@@ -84,7 +86,7 @@ def parse_args() -> argparse.Namespace:
 
 def build_config(args: argparse.Namespace) -> DaemonConfig:
     '''Build configuration object'''
-    config_kwargs: dict[str, object] = {}
+    config_kwargs: dict[str, Any] = {}
     if args.host is not None:
         config_kwargs["host"] = args.host
     if args.port is not None:
@@ -96,7 +98,8 @@ def build_config(args: argparse.Namespace) -> DaemonConfig:
     if args.alive_messages is not None:
         config_kwargs["alive_messages"] = args.alive_messages
 
-    return DaemonConfig(_env_file=args.env_file, **config_kwargs)
+    config_factory = cast(Any, DaemonConfig)
+    return cast(DaemonConfig, config_factory(_env_file=args.env_file, **config_kwargs))
 
 
 def main() -> None:
