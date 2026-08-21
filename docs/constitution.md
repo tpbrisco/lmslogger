@@ -2,10 +2,10 @@
 
 ## Code Quality
 - Write clean, readable, and maintainable code following PEP 8 standards.
-- Use strong typing with type hints and validate with mypy.
-- All data structures must be strictly statically typechecked and dynamically checked at runtime.
+- Use strong static typing with type hints and validate with mypy.
+- Use runtime validation at system boundaries for external inputs, configuration, and network data, while keeping internal code strongly typed.
 - Follow defensive coding practices: anticipate potential errors, validate inputs, and handle edge cases gracefully.
-- Implement proper error handling and logging.
+- Implement proper error handling and logging, with meaningful, actionable error messages that help operators diagnose and resolve issues quickly.
 - Follow DRY (Don't Repeat Yourself) and SOLID principles.
 - Document code thoroughly: each function must contain a docstring, and explain any non-obvious logic with comments.
 - Maintain comprehensive project documentation: use README.md for usage instructions and CONTRIBUTING.md for contribution guidelines.
