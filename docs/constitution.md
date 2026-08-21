@@ -15,6 +15,7 @@
 - Validate all inputs to prevent injection attacks.
 - Use secure communication protocols (e.g., TLS for network connections).
 - Implement least privilege access controls.
+- Abide by minimum permissions by default in all use cases.
 - Regularly update dependencies to patch security vulnerabilities.
 - Avoid storing sensitive data in plain text.
 
