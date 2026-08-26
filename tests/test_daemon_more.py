@@ -67,3 +67,61 @@ def test_daemon_run_exits_on_connect_failure(monkeypatch):
     with pytest.raises(SystemExit) as exc:
         d.run()
     assert exc.value.code == 1
+
+
+def test_main_invokes_daemon(monkeypatch):
+    class DummyDaemon:
+        def __init__(self, cfg):
+            self.cfg = cfg
+
+        def run(self):
+            # indicate run called
+            print("daemon-run-called")
+
+    monkeypatch.setattr("lmslogger.daemon.Daemon", DummyDaemon)
+    monkeypatch.setattr("lmslogger.daemon.parse_args", lambda: SimpleNamespace(env_file=".env", host=None, port=None, command=None, poll_interval=None, alive_messages=None))
+
+    # calling main should construct DummyDaemon and call run()
+    from lmslogger.daemon import main
+
+    main()
+
+
+def test_run_module_as_main(monkeypatch):
+    class DummyDaemon:
+        def __init__(self, cfg):
+            self.cfg = cfg
+
+        def run(self):
+            print("daemon-run-called")
+
+    monkeypatch.setattr("lmslogger.daemon.Daemon", DummyDaemon)
+    monkeypatch.setattr("lmslogger.daemon.parse_args", lambda: SimpleNamespace(env_file=".env", host=None, port=None, command=None, poll_interval=None, alive_messages=None))
+
+    import runpy
+    # Ensure argparse sees no unexpected CLI args
+    monkeypatch.setattr(sys, "argv", ["lmslogger"])
+    # Patch signal handlers and socket to avoid real network/system interactions
+    monkeypatch.setattr("signal.signal", lambda *a, **k: None)
+    import socket as _socket
+
+    class FakeSock:
+        def __init__(self, *a, **k):
+            pass
+
+        def connect(self, addr):
+            return None
+
+        def settimeout(self, t):
+            pass
+
+        def recv(self, n):
+            return b""
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(_socket, "socket", lambda *a, **k: FakeSock())
+    monkeypatch.setattr("time.sleep", lambda *_: None)
+
+    runpy.run_module("lmslogger.daemon", run_name="__main__")

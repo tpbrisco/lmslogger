@@ -174,3 +174,71 @@ def test_network_close_calls_socket_close():
     handler.sock = fs
     handler.close()
     assert fs.closed is True
+
+
+def test_network_connect_success(monkeypatch):
+    class FakeSock:
+        def __init__(self, *a, **k):
+            self.timeout = None
+
+        def connect(self, addr):
+            # simulate successful connect
+            self.addr = addr
+
+        def settimeout(self, t):
+            self.timeout = t
+
+    monkeypatch.setattr("lmslogger.network.socket.socket", lambda *a, **k: FakeSock())
+
+    cfg = DaemonConfig()
+    handler = NetworkHandler(cfg)
+    assert handler.connect() is True
+    assert handler.sock is not None
+
+
+def test_send_command_prints(capsys):
+    handler = NetworkHandler(DaemonConfig())
+
+    class FakeSockSend:
+        def __init__(self):
+            self.data = b""
+
+        def sendall(self, b: bytes):
+            self.data = b
+
+    fs = FakeSockSend()
+    handler.sock = fs
+    handler.send_command("printme")
+    captured = capsys.readouterr()
+    assert "Sent: printme" in captured.out
+
+
+def test_receive_data_prints(capsys):
+    handler = NetworkHandler(DaemonConfig())
+
+    class FakeSock:
+        def recv(self, n):
+            return b"payload%21"
+
+    handler.sock = FakeSock()
+    out = handler.receive_data()
+    assert out == "payload!"
+    captured = capsys.readouterr()
+    assert "Received: payload!" in captured.out
+
+
+def test_receive_returns_none_when_no_socket():
+    handler = NetworkHandler(DaemonConfig())
+    handler.sock = None
+    assert handler.receive_data() is None
+
+
+def test_receive_returns_none_on_empty_bytes():
+    handler = NetworkHandler(DaemonConfig())
+
+    class FakeSockEmpty:
+        def recv(self, n):
+            return b""
+
+    handler.sock = FakeSockEmpty()
+    assert handler.receive_data() is None
