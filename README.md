@@ -42,7 +42,21 @@ The lmslogger.service has a few items to be filled in:
 
 1. Create virtual environment: `python3 -m venv dev`
 2. Activate: `source dev/bin/activate`
-3. Install dependencies: `pip install -r requirements.txt`
+3. Install runtime dependencies: `pip install -r requirements.txt`
+   - To install developer/testing tools (pytest, coverage, mypy), run either:
+
+     - From `requirements-dev.txt`:
+
+       ```bash
+       pip install -r requirements-dev.txt
+       ```
+
+     - Or using PEP-621 extras (preferred if you installed the package editable):
+
+       ```bash
+       # install project and dev extras
+       python -m pip install -e .[dev]
+       ```
 4. Run type check: `mypy src/`
 5. Run tests: `pytest`
 6. Configuration service: `cp lmslogger.service.temple lmslogger.service`
@@ -57,3 +71,52 @@ See docs/SDLC.md for the software development life cycle.
 
 ## ADDITIONAL REFERENCES
 See [LMS Command Line Interface](https://lyrion.org/reference/cli/introduction/)
+
+## Testing
+
+Run the test suite locally either by installing the package into a virtual environment or by setting `PYTHONPATH` to `src` (the CI uses this pattern).
+
+Recommended (virtualenv + editable install):
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e .
+pytest -q
+```
+
+Run without installing (export `PYTHONPATH`):
+
+```bash
+export PYTHONPATH=src
+python3 -m pytest -q
+```
+
+If you need to test with environment-based configuration, set `LMS_` variables (or use a `.env` file):
+
+```bash
+export LMS_HOST=example.com
+export LMS_PORT=1234
+export LMS_COMMAND="status"
+```
+
+The GitHub Action workflow `/.github/workflows/test-manual.yml` sets `PYTHONPATH=src` before running pytest and mypy.
+
+### Type checking (mypy)
+
+You can run `mypy` to perform static type checking. If you installed the package in a virtual environment (recommended), run:
+
+```bash
+python -m mypy src
+```
+
+Or run without installing by exporting `PYTHONPATH` (same pattern as the CI):
+
+```bash
+export PYTHONPATH=src
+python3 -m mypy src
+```
+
+Install `mypy` into your environment with `pip install mypy` or via `requirements.txt` if it is included there.

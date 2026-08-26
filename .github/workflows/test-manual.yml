@@ -19,7 +19,10 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
-          python3 -m pip install pytest mypy pytest-cov
+          # Prefer editable install with PEP-621 dev extras; fall back to requirements-dev.txt
+          python3 -m pip install -e .[dev] || python3 -m pip install -r requirements-dev.txt
+          # Ensure test tooling is available
+          python3 -m pip install pytest pytest-cov mypy
 
       - name: Run tests with coverage
         run: |
