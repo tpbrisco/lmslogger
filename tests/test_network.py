@@ -1,8 +1,6 @@
 import socket
 import argparse
 
-import pytest
-
 from lmslogger.config import DaemonConfig
 from lmslogger.network import NetworkHandler
 from lmslogger.daemon import Daemon, build_config
@@ -119,3 +117,60 @@ def test_network_send_command_sends_bytes():
     handler.sock = fs
     handler.send_command("mycmd")
     assert fs.data == b"mycmd\n"
+
+
+def test_network_connect_failure(monkeypatch, capsys):
+    class MockSocketFail:
+        def __init__(self, *a, **k):
+            pass
+
+        def connect(self, addr):
+            raise Exception("simulated connect failure")
+
+        def settimeout(self, t):
+            pass
+
+    monkeypatch.setattr("lmslogger.network.socket.socket", lambda *a, **k: MockSocketFail())
+
+    handler = NetworkHandler(DaemonConfig())
+    result = handler.connect()
+    captured = capsys.readouterr()
+    assert result is False
+    assert "Connection failed:" in captured.out
+
+
+def test_network_receive_generic_exception(capsys):
+    handler = NetworkHandler(DaemonConfig())
+
+    class FakeSockError:
+        def recv(self, n):
+            raise RuntimeError("recv broken")
+
+    handler.sock = FakeSockError()
+    assert handler.receive_data() is None
+    captured = capsys.readouterr()
+    assert "Receive error:" in captured.out
+
+
+def test_network_send_no_socket_noop(capsys):
+    handler = NetworkHandler(DaemonConfig())
+    handler.sock = None
+    handler.send_command("nothing")
+    captured = capsys.readouterr()
+    assert captured.out == ""
+
+
+def test_network_close_calls_socket_close():
+    handler = NetworkHandler(DaemonConfig())
+
+    class FakeSockClose:
+        def __init__(self):
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    fs = FakeSockClose()
+    handler.sock = fs
+    handler.close()
+    assert fs.closed is True
