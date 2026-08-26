@@ -120,6 +120,9 @@ def test_run_module_as_main(monkeypatch):
 
         def close(self):
             pass
+        def sendall(self, b: bytes):
+            # no-op for tests
+            return None
 
     monkeypatch.setattr(_socket, "socket", lambda *a, **k: FakeSock())
     monkeypatch.setattr("time.sleep", lambda *_: None)
