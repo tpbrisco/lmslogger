@@ -127,11 +127,11 @@ def test_run_module_as_main(monkeypatch):
     monkeypatch.setattr(_socket, "socket", lambda *a, **k: FakeSock())
     monkeypatch.setattr("time.sleep", lambda *_: None)
 
-        import importlib
-        from pathlib import Path
+    import importlib
+    from pathlib import Path
 
-        # Resolve the module file and execute it with run_path to avoid
-        # run_module warnings when the package is already imported.
-        mod = importlib.import_module("lmslogger.daemon")
-        mod_path = Path(mod.__file__).resolve()
-        runpy.run_path(str(mod_path), run_name="__main__")
+    # Resolve the module file and execute it with run_path to avoid
+    # run_module warnings when the package is already imported.
+    mod = importlib.import_module("lmslogger.daemon")
+    mod_path = Path(mod.__file__).resolve()
+    runpy.run_path(str(mod_path), run_name="__main__")
