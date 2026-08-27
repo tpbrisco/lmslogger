@@ -127,9 +127,6 @@ def test_run_module_as_main(monkeypatch):
     monkeypatch.setattr(_socket, "socket", lambda *a, **k: FakeSock())
     monkeypatch.setattr("time.sleep", lambda *_: None)
 
-    import importlib
-    from pathlib import Path
-
     # Ensure a fresh execution of the submodule; remove any previously
     # loaded submodule to avoid runpy warnings and then execute it.
     sys.modules.pop("lmslogger.daemon", None)

@@ -85,13 +85,17 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip install -e .
 pytest -q
+# show coverage in terminal (missing lines) and generate HTML report
+# show coverage summary and missing lines in the terminal
+pytest --cov=src --cov-report=term-missing -q
 ```
 
 Run without installing (export `PYTHONPATH`):
 
 ```bash
 export PYTHONPATH=src
-python3 -m pytest -q
+python3 -m pytest --cov=src --cov-report=term-missing -q
+# if you also want machine-readable or HTML reports, add `--cov-report=json:coverage.json` or `--cov-report=html`
 ```
 
 If you need to test with environment-based configuration, set `LMS_` variables (or use a `.env` file):
