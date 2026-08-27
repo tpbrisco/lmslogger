@@ -128,9 +128,9 @@ def test_network_connect_failure(monkeypatch, capsys):
             raise Exception("simulated connect failure")
 
         def settimeout(self, t):
-            pass
+            pass  # pragma: no cover - test stub
 
-    monkeypatch.setattr("lmslogger.network.socket.socket", lambda *a, **k: MockSocketFail())
+    monkeypatch.setattr("lmslogger.network.socket.socket", lambda *a, **k: MockSocketFail())  # pragma: no cover - test stub
 
     handler = NetworkHandler(DaemonConfig())
     result = handler.connect()

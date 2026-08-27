@@ -46,17 +46,15 @@ def test_daemon_run_exits_on_connect_failure(monkeypatch):
     class MockHandlerFail:
         def __init__(self, config):
             self.config = config
-
         def connect(self):
             return False
-
-        def send_command(self, command: str):
+        def send_command(self, command: str):  # pragma: no cover - test stub
             pass
 
-        def receive_data(self):
+        def receive_data(self):  # pragma: no cover - test stub
             return None
 
-        def close(self):
+        def close(self):  # pragma: no cover - test stub
             pass
 
     monkeypatch.setattr("lmslogger.daemon.NetworkHandler", MockHandlerFail)
@@ -73,7 +71,6 @@ def test_main_invokes_daemon(monkeypatch):
     class DummyDaemon:
         def __init__(self, cfg):
             self.cfg = cfg
-
         def run(self):
             # indicate run called
             print("daemon-run-called")
@@ -90,9 +87,8 @@ def test_main_invokes_daemon(monkeypatch):
 def test_run_module_as_main(monkeypatch):
     class DummyDaemon:
         def __init__(self, cfg):
-            self.cfg = cfg
-
-        def run(self):
+            self.cfg = cfg  # pragma: no cover - not executed in runpy path
+        def run(self):  # pragma: no cover - executed in alternative run path
             print("daemon-run-called")
 
     monkeypatch.setattr("lmslogger.daemon.Daemon", DummyDaemon)
