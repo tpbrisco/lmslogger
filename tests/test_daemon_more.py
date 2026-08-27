@@ -130,8 +130,7 @@ def test_run_module_as_main(monkeypatch):
     import importlib
     from pathlib import Path
 
-    # Resolve the module file and execute it with run_path to avoid
-    # run_module warnings when the package is already imported.
-    mod = importlib.import_module("lmslogger.daemon")
-    mod_path = Path(mod.__file__).resolve()
-    runpy.run_path(str(mod_path), run_name="__main__")
+    # Ensure a fresh execution of the submodule; remove any previously
+    # loaded submodule to avoid runpy warnings and then execute it.
+    sys.modules.pop("lmslogger.daemon", None)
+    runpy.run_module("lmslogger.daemon", run_name="__main__")
